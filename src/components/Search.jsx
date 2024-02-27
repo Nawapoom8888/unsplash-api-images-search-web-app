@@ -6,7 +6,7 @@ import { useGlobalContext } from "../Context";
 import headerBackground from "../assets/header-bg.jpg";
 
 const Search = () => {
-  const { setSearchValue, darkMode, modeSwitch } = useGlobalContext();
+  const { setSearchValue, theme, themeSwitch } = useGlobalContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,9 +33,9 @@ const Search = () => {
       <div className="border-test relative mx-auto flex h-full max-w-6xl flex-col items-center justify-center px-12">
         <button
           className="absolute right-0 top-0 pe-5 pt-5 md:pe-12"
-          onClick={modeSwitch}
+          onClick={themeSwitch}
         >
-          {darkMode ? (
+          {theme === "dark" ? (
             <IoMoon className="text-3xl text-gray-800" />
           ) : (
             <MdSunny className="text-3xl text-gray-100" />

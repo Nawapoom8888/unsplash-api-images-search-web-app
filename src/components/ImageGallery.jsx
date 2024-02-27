@@ -143,7 +143,7 @@ const ImageGallery = () => {
                 <a href={url} target="_blank">
                   <div
                     aria-label={item.alt_description}
-                    className="h-full w-full transition-all duration-300 ease-in-out hover:scale-105"
+                    className="h-full w-full scale-110 transition-all duration-300 ease-in-out hover:scale-100"
                     key={item.id}
                     style={{
                       backgroundImage: `url(${url})`,

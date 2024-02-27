@@ -3,31 +3,47 @@ import React from "react";
 const MyContext = React.createContext();
 
 export const ContextProvider = (props) => {
-  const [mode, setMode] = React.useState("light");
-  const [darkMode, setDarkMode] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState("Vietnam");
 
-  React.useEffect(() => {
-    if (mode === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [mode]);
+  // State to manage the current theme
+  const [theme, setTheme] = React.useState(() => {
+    // Check if a theme is stored in localStorage, otherwise default to 'light'
+    return localStorage.getItem("theme") || "light";
+  });
 
-  const modeSwitch = () => {
-    setMode(mode === "dark" ? "light" : "dark");
-    setDarkMode((prev) => !prev);
+  // Function to toggle between light and dark theme
+  const themeSwitch = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
   };
+
+  // Effect to store the theme in localStorage whenever it changes
+  React.useEffect(() => {
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  // Apply the current theme to the body class
+  React.useEffect(() => {
+    document.documentElement.classList.remove("light", "dark");
+    document.documentElement.classList.add(theme);
+  }, [theme]);
+
+  // React.useEffect(() => {
+  //   if (mode === "dark") {
+  //     document.documentElement.classList.add("dark");
+  //   } else {
+  //     document.documentElement.classList.remove("dark");
+  //   }
+  // }, [mode]);
 
   return (
     <MyContext.Provider
       value={{
         searchValue,
         setSearchValue,
-        darkMode,
-        setDarkMode,
-        modeSwitch,
+        themeSwitch,
+        theme,
+        setTheme,
       }}
     >
       {props.children}
